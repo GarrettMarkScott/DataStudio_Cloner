@@ -2,12 +2,12 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver import ActionChains
 import time
-
+import login_creds as lc
 
 gsc_url = 'gallghergmc.com' #input('what is the url associated with GSC? \n')
 a_name = 'Gallagher GMC' #input('What is the account name?\n')
-login_email = 'google@mydealerworld.com'
-login_pass = 'Dealer531World'
+login_email = lc.login_email
+login_pass = lc.login_pass
 demo_studio_folder = '_Demo Studio'
 demo_studio_title = 'Demo Data Studio 07/2019'
 demo_data_sheet = 'Demo Data Sheet 07/2019'
@@ -81,11 +81,11 @@ time.sleep(1)
 
 #Enter Search in Search Bar
 browser.find_element_by_css_selector('input[aria-label="Search Drive"]').send_keys(demo_data_sheet)
-time.sleep(1)
+time.sleep(3)
 
 #Generic Enter Command
 ActionChains(browser).send_keys(Keys.ENTER).perform()
-time.sleep(1)
+time.sleep(2)
 
 #Click specific file
 browser.find_element_by_css_selector('div[aria-label="'+demo_data_sheet+'"]').click()
@@ -105,28 +105,48 @@ print('Fasten your seatbelts!')
 browser.switch_to.window(browser.window_handles[1])
 
 browser.get('https://datastudio.google.com/reporting/1-6lVWLkE5ftuErzs3Si8DSQoMv8egGz_/page/1teX')
-time.sleep(15)
+time.sleep(5)
 
-#browser.switch_to.window(browser.window_handles[0])
-
+#Hitting the 'Edit' button
 browser.find_element_by_xpath('//*[@id="reporting-app-header"]/md-toolbar/div/div[3]/div[10]/button/md-icon').click()
-time.sleep(4)
+time.sleep(3)
 
-try:
-    browser.find_element_by_css_selector('div[flex class="ng-binding flex"]').click()
-    print('1pass')
-except:
-    print('oh jeez')
-    pass
+#Could not seem to figure out how to trigger the drop down menu for Data Studio Cloning, going to base off location of edit button.
 
-try:
-    browser.find_element_by_class('md-button md-data-studio-theme md-ink-ripple').click()
-    print('2pass')
-except:
-    print('double jeez')
-    pass
+#Set Up Anchor Point for Positional Movement
+view_button = browser.find_element_by_xpath('//*[@id="reporting-app-header"]/md-toolbar/div/div[3]/div[9]/button')
 
-
-elem = find_element_by_selector(selector)
+#Add Shortcut for Action Chain
 ac = ActionChains(browser)
-ac.move_to_element(elem).move_by_offset(x_off, y_off).click().perform()
+
+#Click File Dropdown
+ac.move_to_element(view_button).move_by_offset(-980, 20).click().perform()
+
+
+#Click 'Make a copy...'
+ac.move_to_element(view_button).move_by_offset(-965, 203).click().perform()
+time.sleep(3)
+
+
+#Switch to popup box
+browser.switch_to.alert
+
+browser.find_element_by_xpath('//*[@id="select_value_label_4304"]/span[2]').click()
+
+'''
+#Click close
+#browser.find_element_by_xpath('/html/body/div[7]/md-dialog/md-dialog-actions/button[1]').click()
+
+#Set Up New Anchor point to the html position (0,0)
+html_position = browser.find_element_by_xpath('/html')
+anchor_location = html_position.location
+print(anchor_location)
+
+#Click the 'Dealer Leads' source
+ac.move_to_element(html_position).move_by_offset(727, 389).click().perform()
+time.sleep(2)
+
+#Click 'Create New Data Source'
+#ac.move_to_element(close_button).move_by_offset(0, -90).click().perform()
+time.sleep(5)
+'''
