@@ -34,7 +34,7 @@ time.sleep(2)
 password_next_button = browser.find_element_by_id('passwordNext')
 password_next_button.click()
 time.sleep(5)
-
+'''
 #New Folder Window
 ActionChains(browser).key_down(Keys.SHIFT).send_keys('f').key_up(Keys.SHIFT).perform()
 time.sleep(5)
@@ -73,19 +73,13 @@ time.sleep(2)
 ActionChains(browser).send_keys(Keys.ENTER).perform()
 time.sleep(4)
 
-'''
-#Click Search Bar
-browser.find_element_by_css_selector('div[aria-label="Search Drive"]').click()
-time.sleep(1)
-'''
-
 #Enter Search in Search Bar
 browser.find_element_by_css_selector('input[aria-label="Search Drive"]').send_keys(demo_data_sheet)
 time.sleep(3)
 
 #Generic Enter Command
 ActionChains(browser).send_keys(Keys.ENTER).perform()
-time.sleep(2)
+time.sleep(3)
 
 #Click specific file
 browser.find_element_by_css_selector('div[aria-label="'+demo_data_sheet+'"]').click()
@@ -101,8 +95,10 @@ user_status = input('Are you ready to automate this bitty? \n')
 print()
 print('Fasten your seatbelts!')
 
+'''
+
 ########################### OPEN DEMO DATA STUDIO ##############################
-browser.switch_to.window(browser.window_handles[1])
+#browser.switch_to.window(browser.window_handles[1])
 
 browser.get('https://datastudio.google.com/reporting/1-6lVWLkE5ftuErzs3Si8DSQoMv8egGz_/page/1teX')
 time.sleep(5)
@@ -129,9 +125,28 @@ time.sleep(3)
 
 
 #Switch to popup box
-browser.switch_to.alert
+#browser.switch_to.alert
 
-browser.find_element_by_xpath('//*[@id="select_value_label_4304"]/span[2]').click()
+#Click the [1] Data Source "Dealer Leads"
+browser.find_element_by_xpath('(//*[@class="md-select-value"]/span[1]//*[@class="md-text ng-binding"])[1]').click()
+time.sleep(2)
+
+#Seach for [1] Data Source of a_name ***REPLACE HARD VALUE HERE***
+browser.find_element_by_xpath('//*[@id="input_219"]').send_keys('Gotcha')
+time.sleep(2)
+
+browser.find_element_by_xpath('//*[@id="input_219"]').clear()
+time.sleep(2)
+
+#Seach for [1] Data Source of a_name ***REPLACE HARD VALUE HERE***
+browser.find_element_by_xpath('//*[@id="input_219"]').send_keys('Gallagher - Dealer Leads')
+time.sleep(2)
+
+#Generic Enter Command
+#ActionChains(browser).send_keys(Keys.ENTER).perform()
+#time.sleep(4)
+
+browser.find_element_by_xpath('(//*[@class="ng-scope md-data-studio-theme md-ink-ripple"])[1]').click()
 
 '''
 #Click close
